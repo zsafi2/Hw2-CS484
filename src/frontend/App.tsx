@@ -44,12 +44,12 @@ function App() {
         loadProducts()
     }, [query, currentPage])
 
-    function handleafterSubmissionadd() {
+    async function handleafterSubmissionadd() {
         setStatus('Product added successfully')
         setShowForm('none')
         setCurrentPage(1)
     }
-    function handleafterSubmissiondelete() {
+    async function handleafterSubmissiondelete() {
         setStatus('Product deleted successfully')
         setShowForm('none')
         setCurrentPage(1)
@@ -111,8 +111,8 @@ function App() {
             {showForm === 'delete' && (
                 <ProductForm
                     mode={showForm}
-                    onProductAdded={handleafterSubmissiondelete}
-                    onProductDeleted={() => {}}
+                    onProductAdded={() => {}}
+                    onProductDeleted={handleafterSubmissiondelete}
                 />
             )}
             {showForm === 'none' && (
