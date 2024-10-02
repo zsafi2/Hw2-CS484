@@ -3,7 +3,10 @@ import '../public/StatusBanner.css'
 
 // TODO
 // Implement the StatusBannerProps interface.
-interface StatusBannerProps {}
+interface StatusBannerProps {
+    message: string,
+    onClose: () => void;
+}
 
 const StatusBanner: React.FC<StatusBannerProps> = ({ message, onClose }) => {
     const [isVisible, setIsVisible] = useState(true)

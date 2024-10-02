@@ -4,10 +4,24 @@ const baseUrl = '/api/products'
 
 export const fetchProducts = async (query = '', page = 1) => {
     // TODO Fetch the products from the API
-    if (!response.ok) {
-        throw new Error('Failed to fetch products')
-    }
-    return response.json()
+    try {
+        const response = await fetch(`${baseUrl}?query=${encodeURIComponent(query)}&page=${page}`);
+    
+        if (!response.ok) {
+          throw new Error('Failed to fetch products');
+        }
+    
+        const data = await response.json();
+        
+    
+        return {
+          products: data.products as Product[],
+          totalPages: data.totalPages as number,
+        };
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        throw error;
+      }
 }
 
 export const addProduct = async (product: Omit<Product, 'id'>) => {

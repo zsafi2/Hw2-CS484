@@ -6,7 +6,11 @@ import '../public/ProductForm.css'
 // Implement the ProductFormProps interface.
 // Note that mode can be either "add" or "delete".
 // onProductAdded and onProductDeleted may or may not be necessarily passed to the component.
-interface ProductFormProps {}
+interface ProductFormProps {
+    mode: string,
+    onProductAdded: () => void,
+    onProductDeleted: () => void
+}
 
 const ProductForm: React.FC<ProductFormProps> = ({
     mode,
@@ -14,20 +18,26 @@ const ProductForm: React.FC<ProductFormProps> = ({
     onProductDeleted,
 }) => {
     const [name, setName] = useState('')
-    const [imageUrl, setImageUrl] = useState('')
-    const [productId, setProductId] = useState('')
+    const [image_url, setImageUrl] = useState(''); // Using image_url as defined in Product type
+    const [productId, setProductId] = useState<number | ''>(''); // Product ID sta
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
             if (mode === 'add') {
-                // TODO
-                // Call the correct function from the api module (located in components/api.ts) to add a product
-                // and reset the state of the component. The view should go back to the list of products.
-            } else {
-                // TODO
-                // Call the correct function from the api module (located in components/api.ts) to delete a product
-                // and reset the state of the component. The view should go back to the list of products.
+              // Call the addProduct API function
+              await addProduct({
+                  name, image_url: image_url || undefined,
+                  deleted: false
+              });
+              setName('');
+              setImageUrl('');
+              if (onProductAdded) onProductAdded();
+            } else if (mode === 'delete' && typeof productId === 'number') {
+              // Call the deleteProduct API function
+              await deleteProduct(productId);
+              setProductId('');
+              if (onProductDeleted) onProductDeleted();
             }
         } catch (error) {
             console.error(
@@ -40,8 +50,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
     return (
         <div className="product-form-container">
             <h2 className="product-form-title">
-                {/* TODO Set the correct title based on whether the component is for adding or deleting products.
-          The titles should be "Add New Product" and "Delete Product" respectively. */}
+                {mode === 'add' ? 'Add New Product' : 'Delete Product'}
             </h2>
             <form onSubmit={handleSubmit} className="product-form">
                 {mode === 'add' ? (
@@ -53,6 +62,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                 id="name"
                                 value={name}
                                 placeholder="Enter product name..."
+                                onChange={(e) => setName(e.target.value)}
                                 required
                             />
                         </div>
@@ -61,8 +71,9 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             <input
                                 type="url"
                                 id="imageUrl"
-                                value={imageUrl}
+                                value={image_url}
                                 placeholder="Enter image URL..."
+                                onChange={(e) => setImageUrl(e.target.value)}
                             />
                         </div>
                     </>
@@ -74,6 +85,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             id="productId"
                             value={productId}
                             placeholder="Enter product ID..."
+                            onChange={(e) => setProductId(e.target.value ? Number(e.target.value) : '')}
                             required
                         />
                     </div>
