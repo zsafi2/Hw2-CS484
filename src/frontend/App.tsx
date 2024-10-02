@@ -101,7 +101,7 @@ function App() {
                 <ProductForm
                     mode={showForm}
                     onProductAdded={handleafterSubmissionadd}
-                    onProductDeleted={handleafterSubmissiondelete}
+                    onProductDeleted={() => {}}
                 />
             )}
             {/* TODO Add the necessary props to the underlying component.
@@ -111,8 +111,8 @@ function App() {
             {showForm === 'delete' && (
                 <ProductForm
                     mode={showForm}
-                    onProductAdded={handleafterSubmissionadd}
-                    onProductDeleted={handleafterSubmissiondelete}
+                    onProductAdded={handleafterSubmissiondelete}
+                    onProductDeleted={() => {}}
                 />
             )}
             {showForm === 'none' && (

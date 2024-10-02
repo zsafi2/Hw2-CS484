@@ -3,6 +3,8 @@ import Database from 'better-sqlite3'
 import { readFileSync } from 'fs'
 import { fileURLToPath } from 'url'
 import { dirname, join } from 'path'
+import { pathToFileURL } from 'url'
+import path from 'path'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -23,20 +25,7 @@ export function wipe() {
     sqlite.close()
 }
 
-// if (import.meta.url === `file://${process.argv[1]}`) {
-//     await seed()
-// }
-
-import { resolve } from 'path'
-
-import { pathToFileURL } from 'url'
-import path from 'path'
-
-
-
-
 const scriptPath = path.resolve(process.argv[1])
-
 const scriptURL = pathToFileURL(scriptPath).href
 
 if (import.meta.url === scriptURL) {
