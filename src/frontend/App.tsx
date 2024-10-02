@@ -44,7 +44,13 @@ function App() {
         loadProducts()
     }, [query, currentPage])
 
-    function handleafterSubmission() {
+    function handleafterSubmissionadd() {
+        setStatus('Product added successfully')
+        setShowForm('none')
+        setCurrentPage(1)
+    }
+    function handleafterSubmissiondelete() {
+        setStatus('Product deleted successfully')
         setShowForm('none')
         setCurrentPage(1)
     }
@@ -94,8 +100,8 @@ function App() {
             {showForm === 'add' && (
                 <ProductForm
                     mode={showForm}
-                    onProductAdded={handleafterSubmission}
-                    onProductDeleted={handleafterSubmission}
+                    onProductAdded={handleafterSubmissionadd}
+                    onProductDeleted={handleafterSubmissiondelete}
                 />
             )}
             {/* TODO Add the necessary props to the underlying component.
@@ -105,8 +111,8 @@ function App() {
             {showForm === 'delete' && (
                 <ProductForm
                     mode={showForm}
-                    onProductAdded={handleafterSubmission}
-                    onProductDeleted={handleafterSubmission}
+                    onProductAdded={handleafterSubmissionadd}
+                    onProductDeleted={handleafterSubmissiondelete}
                 />
             )}
             {showForm === 'none' && (
