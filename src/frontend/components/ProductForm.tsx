@@ -7,7 +7,7 @@ import '../public/ProductForm.css'
 // Note that mode can be either "add" or "delete".
 // onProductAdded and onProductDeleted may or may not be necessarily passed to the component.
 interface ProductFormProps {
-    mode: string
+    mode: 'add' | 'delete'
     onProductAdded: () => void
     onProductDeleted: () => void
 }
@@ -18,7 +18,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
     onProductDeleted,
 }) => {
     const [name, setName] = useState('')
-    const [image_url, setImageUrl] = useState('') // Using image_url as defined in Product type
+    const [imageUrl, setImageUrl] = useState('') // Using image_url as defined in Product type
     const [productId, setProductId] = useState<number | ''>('') // Product ID sta
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -28,7 +28,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                 // Call the addProduct API function
                 await addProduct({
                     name,
-                    image_url: image_url || undefined,
+                    image_url: imageUrl || '',
                     deleted: false,
                 })
                 setName('')
@@ -72,7 +72,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             <input
                                 type="url"
                                 id="imageUrl"
-                                value={image_url}
+                                value={imageUrl}
                                 placeholder="Enter image URL..."
                                 onChange={(e) => setImageUrl(e.target.value)}
                             />
