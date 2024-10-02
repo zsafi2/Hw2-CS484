@@ -4,8 +4,8 @@ import '../public/StatusBanner.css'
 // TODO
 // Implement the StatusBannerProps interface.
 interface StatusBannerProps {
-    message: string,
-    onClose: () => void;
+    message: string
+    onClose: () => void
 }
 
 const StatusBanner: React.FC<StatusBannerProps> = ({ message, onClose }) => {

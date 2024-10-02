@@ -7,8 +7,8 @@ import '../public/ProductForm.css'
 // Note that mode can be either "add" or "delete".
 // onProductAdded and onProductDeleted may or may not be necessarily passed to the component.
 interface ProductFormProps {
-    mode: string,
-    onProductAdded: () => void,
+    mode: string
+    onProductAdded: () => void
     onProductDeleted: () => void
 }
 
@@ -18,26 +18,27 @@ const ProductForm: React.FC<ProductFormProps> = ({
     onProductDeleted,
 }) => {
     const [name, setName] = useState('')
-    const [image_url, setImageUrl] = useState(''); // Using image_url as defined in Product type
-    const [productId, setProductId] = useState<number | ''>(''); // Product ID sta
+    const [image_url, setImageUrl] = useState('') // Using image_url as defined in Product type
+    const [productId, setProductId] = useState<number | ''>('') // Product ID sta
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         try {
             if (mode === 'add') {
-              // Call the addProduct API function
-              await addProduct({
-                  name, image_url: image_url || undefined,
-                  deleted: false
-              });
-              setName('');
-              setImageUrl('');
-              if (onProductAdded) onProductAdded();
+                // Call the addProduct API function
+                await addProduct({
+                    name,
+                    image_url: image_url || undefined,
+                    deleted: false,
+                })
+                setName('')
+                setImageUrl('')
+                if (onProductAdded) onProductAdded()
             } else if (mode === 'delete' && typeof productId === 'number') {
-              // Call the deleteProduct API function
-              await deleteProduct(productId);
-              setProductId('');
-              if (onProductDeleted) onProductDeleted();
+                // Call the deleteProduct API function
+                await deleteProduct(productId)
+                setProductId('')
+                if (onProductDeleted) onProductDeleted()
             }
         } catch (error) {
             console.error(
@@ -85,7 +86,11 @@ const ProductForm: React.FC<ProductFormProps> = ({
                             id="productId"
                             value={productId}
                             placeholder="Enter product ID..."
-                            onChange={(e) => setProductId(e.target.value ? Number(e.target.value) : '')}
+                            onChange={(e) =>
+                                setProductId(
+                                    e.target.value ? Number(e.target.value) : ''
+                                )
+                            }
                             required
                         />
                     </div>
