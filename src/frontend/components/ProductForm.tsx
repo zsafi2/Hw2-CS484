@@ -33,13 +33,13 @@ const ProductForm: React.FC<ProductFormProps> = ({
                     image_url: imageUrl || '',
                     deleted: false,
                 })
-               
+
                 if (onProductAdded) onProductAdded()
             } else if (mode === 'delete' && typeof productId === 'number') {
                 // Call the deleteProduct API function
                 setProductId('')
                 await deleteProduct(productId)
-                
+
                 if (onProductDeleted) onProductDeleted()
             }
         } catch (error) {

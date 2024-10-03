@@ -105,6 +105,7 @@ function App() {
                 <ProductForm
                     mode="add"
                     onProductAdded={handleafterSubmissionadd}
+                    onProductDeleted={() => {}}
                 />
             )}
             {/* TODO Add the necessary props to the underlying component.
