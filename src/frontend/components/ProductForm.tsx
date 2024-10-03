@@ -7,7 +7,7 @@ import '../public/ProductForm.css'
 // Note that mode can be either "add" or "delete".
 // onProductAdded and onProductDeleted may or may not be necessarily passed to the component.
 interface ProductFormProps {
-    mode: 'add' | 'delete'
+    mode: string
     onProductAdded: () => void
     onProductDeleted: () => void
 }
@@ -26,18 +26,20 @@ const ProductForm: React.FC<ProductFormProps> = ({
         try {
             if (mode === 'add') {
                 // Call the addProduct API function
+                setName('')
+                setImageUrl('')
                 await addProduct({
                     name,
                     image_url: imageUrl || '',
                     deleted: false,
                 })
-                setName('')
-                setImageUrl('')
+               
                 if (onProductAdded) onProductAdded()
             } else if (mode === 'delete' && typeof productId === 'number') {
                 // Call the deleteProduct API function
-                await deleteProduct(productId)
                 setProductId('')
+                await deleteProduct(productId)
+                
                 if (onProductDeleted) onProductDeleted()
             }
         } catch (error) {
@@ -63,8 +65,8 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                 id="name"
                                 value={name}
                                 placeholder="Enter product name..."
-                                onChange={(e) => setName(e.target.value)}
                                 required
+                                onChange={(e) => setName(e.target.value)}
                             />
                         </div>
                         <div className="form-group">
@@ -74,6 +76,7 @@ const ProductForm: React.FC<ProductFormProps> = ({
                                 id="imageUrl"
                                 value={imageUrl}
                                 placeholder="Enter image URL..."
+                                required
                                 onChange={(e) => setImageUrl(e.target.value)}
                             />
                         </div>

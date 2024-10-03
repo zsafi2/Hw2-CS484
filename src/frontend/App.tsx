@@ -55,6 +55,10 @@ function App() {
         setCurrentPage(1)
     }
 
+    useEffect(() => {
+        setCurrentPage(1)
+    }, [query])
+
     return (
         <div>
             <header>
@@ -99,9 +103,8 @@ function App() {
             "none" and navigate to the first page of the product list */}
             {showForm === 'add' && (
                 <ProductForm
-                    mode={showForm}
+                    mode="add"
                     onProductAdded={handleafterSubmissionadd}
-                    onProductDeleted={() => {}}
                 />
             )}
             {/* TODO Add the necessary props to the underlying component.
